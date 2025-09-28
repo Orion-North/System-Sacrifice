@@ -1,86 +1,58 @@
-﻿import { gameState, selectors } from './state.js';
+import { gameState, selectors } from './state.js';
 import { playDeleteSound } from './audio.js';
 import { updateProgress, appendLogEntry, trimLog } from './ui.js';
 import { applyConsequences } from './consequences.js';
 
 export function renderFileExplorer() {
   selectors.folderContainer.innerHTML = '';
-  Object.keys(gameState.filesystem)
-    .sort()
-    .forEach(function (folderName) {
-      const node = gameState.filesystem[folderName];
-      const element = buildFolderElement(folderName, node, [folderName], 0);
-      selectors.folderContainer.appendChild(element);
-    });
-}
+  const allFiles = collectFilePaths(gameState.filesystem);
+  allFiles.sort();
 
-function buildFolderElement(name, node, pathParts, depth) {
-  const details = document.createElement('details');
-  details.className = 'folder';
-  details.dataset.depth = String(depth);
-  const folderPath = pathParts.join('/');
-  details.dataset.path = folderPath;
-  if (gameState.openFolders.has(folderPath)) {
-    details.open = true;
+  if (allFiles.length === 0) {
+    selectors.folderContainer.appendChild(createPlaceholderRow());
+    return;
   }
 
-  const summary = document.createElement('summary');
-  summary.textContent = name;
-  details.appendChild(summary);
-
-  details.addEventListener('toggle', function () {
-    if (details.open) {
-      gameState.openFolders.add(folderPath);
-    } else {
-      gameState.openFolders.delete(folderPath);
-    }
+  allFiles.forEach(function (path) {
+    const row = createFileEntry(path);
+    selectors.folderContainer.appendChild(row);
   });
-
-  if (Array.isArray(node)) {
-    if (node.length === 0) {
-      details.appendChild(createPlaceholderRow(depth + 1));
-    } else {
-      node.forEach(function (file) {
-        const row = createFileEntry(pathParts.concat(file), depth + 1);
-        details.appendChild(row);
-      });
-    }
-  } else {
-    const childKeys = Object.keys(node).sort();
-    if (childKeys.length === 0) {
-      details.appendChild(createPlaceholderRow(depth + 1));
-    }
-    childKeys.forEach(function (childName) {
-      const childNode = node[childName];
-      const childElement = buildFolderElement(childName, childNode, pathParts.concat(childName), depth + 1);
-      details.appendChild(childElement);
-    });
-  }
-
-  return details;
 }
 
-function createPlaceholderRow(depth) {
+function collectFilePaths(node, pathParts) {
+  const currentParts = pathParts || [];
+  if (Array.isArray(node)) {
+    return node.map(function (fileName) {
+      return currentParts.concat(fileName).join('/');
+    });
+  }
+  return Object.keys(node).reduce(function (paths, key) {
+    const child = node[key];
+    const childPaths = collectFilePaths(child, currentParts.concat(key));
+    return paths.concat(childPaths);
+  }, []);
+}
+
+function createPlaceholderRow() {
   const empty = document.createElement('div');
   empty.className = 'file-entry empty';
-  empty.dataset.depth = String(depth);
-  empty.textContent = '<< empty >>';
+  empty.textContent = '<< filesystem empty >>';
   return empty;
 }
 
-function createFileEntry(pathParts, depth) {
-  const fileName = pathParts[pathParts.length - 1];
+function createFileEntry(path) {
   const row = document.createElement('div');
   row.className = 'file-entry';
-  row.dataset.path = pathParts.join('/');
-  row.dataset.depth = String(depth);
+  row.dataset.path = path;
 
   const label = document.createElement('span');
-  label.textContent = fileName;
+  label.className = 'file-path';
+  label.textContent = path;
+  label.title = path;
 
   const button = document.createElement('button');
   button.type = 'button';
-  button.setAttribute('aria-label', 'Delete ' + fileName);
+  button.setAttribute('aria-label', 'Delete ' + path);
   button.textContent = 'Delete';
   button.addEventListener('click', function () {
     handleDeleteClick(row);

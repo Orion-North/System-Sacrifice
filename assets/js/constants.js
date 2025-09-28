@@ -25,7 +25,16 @@ export const INITIAL_FILESYSTEM = {
   core: {
     subsystems: ['Physics.dll'],
     runtime: ['System.exe'],
-    security: ['reality_anchor.sys', 'quantum_stability.dat', 'consciousness_stream.bin', 'dream_fragments.mem']
+    security: [
+      'reality_anchor.sys',
+      'quantum_stability.dat',
+      'consciousness_stream.bin',
+      'dream_fragments.mem',
+      'failsafe_override.key',
+      'entropy_lattice.cfg',
+      'soul_vault.lock',
+      'timeline_anchor.log'
+    ]
   },
   world: {
     barriers: ['ObsidianWall.asset'],
@@ -52,7 +61,11 @@ export const CONSEQUENCE_DESCRIPTIONS = {
   'core/security/reality_anchor.sys': 'Reality anchor destabilized. System collapse imminent.',
   'core/security/quantum_stability.dat': 'Quantum coherence lost. Reality fracturing.',
   'core/security/consciousness_stream.bin': 'Consciousness stream severed. Existence compromised.',
-  'core/security/dream_fragments.mem': 'Dream fragments scattered. The void beckons.'
+  'core/security/dream_fragments.mem': 'Dream fragments scattered. The void beckons.',
+  'core/security/failsafe_override.key': 'Failsafe override tripped. Shutdown cascade triggered.',
+  'core/security/entropy_lattice.cfg': 'Entropy lattice collapsed. Structure unwinding.',
+  'core/security/soul_vault.lock': 'Soul vault breached. Containment shattered.',
+  'core/security/timeline_anchor.log': 'Timeline anchor erased. Reality slipping out of sync.'
 };
 
 export const TILE_SIZE = 48;
