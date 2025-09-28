@@ -1,4 +1,4 @@
-﻿import { BARRIER_PATH, CAPYBARA_PATH, COFFEE_MUG_PATH, SKELETON_PATH } from './constants.js';
+import { BARRIER_PATH, CAPYBARA_PATH, COFFEE_MUG_PATH } from './constants.js';
 import { gameState, worldState, selectors, runtimeState, audioState } from './state.js';
 import { setAssetActive } from './assetManager.js';
 import { flashGlitchOverlay } from './ui.js';
@@ -70,19 +70,6 @@ export function applyConsequences(path) {
       break;
     case 'core/runtime/System.exe':
       triggerFinalEvent();
-      break;
-    case SKELETON_PATH:
-      if (worldState.skeleton.active) {
-        worldState.skeleton.active = false;
-        worldState.skeleton.blobbed = true;
-        worldState.skeleton.animationFrame = 0;
-        worldState.skeleton.animationTimer = 0;
-        worldState.skeleton.y = worldState.skeleton.baseY;
-        worldState.skeleton.present = worldState.currentScene === worldState.skeleton.sceneIndex;
-        setAssetActive(SKELETON_PATH, false);
-        flashGlitchOverlay('Skeleton dissolves into a blob.');
-        playGlitchSound();
-      }
       break;
     case BARRIER_PATH:
       if (worldState.barrierPresent) {

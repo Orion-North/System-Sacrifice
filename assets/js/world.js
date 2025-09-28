@@ -1,4 +1,4 @@
-﻿import {
+import {
   TILE_SIZE,
   GROUND_SURFACE_OFFSET,
   SCENES,
@@ -11,27 +11,16 @@
   CHARACTER_ASSET_PATH,
   COFFEE_MUG_PATH,
   CAPYBARA_PATH,
-  SKELETON_PATH,
   CHARACTER_SPRITE_COLUMNS,
   CHARACTER_SPRITE_ROWS,
   CHARACTER_ANIMATION_FPS,
-  SKELETON_SPRITE_COLUMNS,
-  SKELETON_SPRITE_ROWS,
-  SKELETON_ANIMATION_FPS,
-  BLOB_PLACEHOLDER_SRC,
   physicsState,
   COYOTE_TIME,
 } from './constants.js';
 import { worldState, inputState, selectors, runtimeState } from './state.js';
-import { getActiveImage, getPlaceholderImage, setAssetActive } from './assetManager.js';
-import { loadImage } from './utils.js';
+import { getActiveImage, getPlaceholderImage } from './assetManager.js';
 import { playJumpSound, playGlitchSound } from './audio.js';
 import { flashGlitchOverlay } from './ui.js';
-
-
-
-const blobPlaceholderImage = loadImage(BLOB_PLACEHOLDER_SRC);
-const SKELETON_TOTAL_FRAMES = Math.max(1, SKELETON_SPRITE_COLUMNS * SKELETON_SPRITE_ROWS);
 
 export function resetWorldState() {
   worldState.started = false;
@@ -71,13 +60,6 @@ export function resetWorldState() {
   capy.x = Math.max(120, selectors.canvas.width - capy.width - 140);
   capy.baseY = surfaceY - capy.height;
   capy.y = capy.baseY;
-
-  const playerMorph = worldState.playerMorph;
-  playerMorph.animating = false;
-  playerMorph.completed = false;
-  playerMorph.animationFrame = 0;
-  playerMorph.animationTimer = 0;
-  playerMorph.deactivateSkeletonAsset = false;
 
   inputState.left = false;
   inputState.right = false;
@@ -226,7 +208,6 @@ export function updateWorld(dt) {
     player.animationTimer = 0;
   }
   updateMugState(dt, physics, groundY);
-  updateSkeleton(dt, groundY);
   updateCapybara(dt, groundY);
 
   if (worldState.physicsBroken) {
@@ -273,7 +254,6 @@ export function drawScene() {
   if (worldState.mugPresent) {
     drawMug(ctx, scene);
   }
-  drawSkeleton(ctx, scene);
   drawCapybara(ctx, scene);
   drawPlayer(ctx, scene);
   drawBarrier(ctx, scene, baseY);
@@ -323,32 +303,6 @@ function updateMugState(dt, physics, groundY) {
     mug.y = groundY - mug.height;
   }
 }
-
-function updatePlayerMorph(dt) {
-  const morph = worldState.playerMorph;
-  if (!morph.animating) {
-    return;
-  }
-  const frameDuration = SKELETON_ANIMATION_FPS > 0 ? 1 / SKELETON_ANIMATION_FPS : 0.0625;
-  morph.animationTimer += dt;
-  while (morph.animationTimer >= frameDuration) {
-    morph.animationTimer -= frameDuration;
-    morph.animationFrame += 1;
-    if (morph.animationFrame >= SKELETON_TOTAL_FRAMES) {
-      morph.animating = false;
-      morph.completed = true;
-      morph.animationFrame = SKELETON_TOTAL_FRAMES - 1;
-      morph.animationTimer = 0;
-      if (morph.deactivateSkeletonAsset) {
-        setAssetActive(SKELETON_PATH, false);
-        morph.deactivateSkeletonAsset = false;
-      }
-      break;
-    }
-  }
-}
-
-
 
 function updateCapybara(dt, groundY) {
   const capy = worldState.capybara;
@@ -646,7 +600,9 @@ function drawCapybara(ctx, scene) {
   }
 
   ctx.restore();
-}function drawBarrier(ctx, scene, groundY) {
+}
+
+function drawBarrier(ctx, scene, groundY) {
   if (!worldState.barrierPresent || worldState.currentScene !== BARRIER_SCENE_INDEX) {
     return;
   }
