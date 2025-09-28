@@ -17,6 +17,12 @@ export function applyConsequences(path) {
       setAssetActive(COFFEE_MUG_PATH, false);
       flashGlitchOverlay('Coffee mug sacrificed');
       break;
+    case 'core/security/reality_anchor.sys':
+    case 'core/security/quantum_stability.dat':
+    case 'core/security/consciousness_stream.bin':
+    case 'core/security/dream_fragments.mem':
+      triggerFinalEvent();
+      break;
     case 'textures/environment/backgrounds/Background.png':
       worldState.backgroundBlackout = true;
       worldState.fadeTarget = Math.max(worldState.fadeTarget, 0.55);
