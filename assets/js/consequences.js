@@ -21,6 +21,10 @@ export function applyConsequences(path) {
     case 'core/security/quantum_stability.dat':
     case 'core/security/consciousness_stream.bin':
     case 'core/security/dream_fragments.mem':
+    case 'core/security/failsafe_override.key':
+    case 'core/security/entropy_lattice.cfg':
+    case 'core/security/soul_vault.lock':
+    case 'core/security/timeline_anchor.log':
       triggerFinalEvent();
       break;
     case 'textures/environment/backgrounds/Background.png':
