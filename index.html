@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sacrifice Explorer</title>
+    <link rel="stylesheet" href="assets/css/style.css" />
+  </head>
+  <body>
+    <div id="glitch-overlay" aria-live="polite">System unstable…</div>
+    <header class="top-bar">
+      <h1 class="title">Sacrifice Explorer</h1>
+      <div class="progress-container" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        <div id="progress-bar"></div>
+      </div>
+    </header>
+
+    <div class="app-shell">
+      <aside class="explorer" aria-label="Virtual file explorer">
+        <div class="explorer-header">
+          <span class="explorer-title">Virtual Files</span>
+          <button id="reset-button" class="ghost-button" type="button">Reset</button>
+        </div>
+        <div id="folder-container"></div>
+      </aside>
+
+      <main class="stage" aria-label="Game world">
+        <canvas id="game-canvas" width="840" height="480" aria-label="Ritual arena"></canvas>
+        <div id="ui-overlay">
+          <button id="start-button" class="ui-button" type="button">Start</button>
+          <div id="pause-overlay" class="hidden">
+            <p>Paused</p>
+            <button id="resume-button" class="ui-button" type="button">Resume</button>
+          </div>
+        </div>
+      </main>
+
+      <section class="log-panel" aria-label="Sacrifice log">
+        <h2>Sacrifice Log</h2>
+        <ul id="log-list"></ul>
+      </section>
+    </div>
+
+    <div id="final-screen" class="hidden" role="dialog" aria-modal="true">
+      <div class="final-content">
+        <h2>The Sacrifice is Complete.</h2>
+        <p>The system has collapsed.</p>
+        <button id="restart-button" class="ui-button" type="button">Restart</button>
+      </div>
+    </div>
+
+    <script type="module" src="assets/js/game.js"></script>
+  </body>
+</html>
