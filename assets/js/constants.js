@@ -1,4 +1,4 @@
-﻿export const INITIAL_FILESYSTEM = {
+export const INITIAL_FILESYSTEM = {
   textures: {
     avatars: ['Player.png'],
     props: {
@@ -29,7 +29,7 @@
   },
   world: {
     barriers: ['ObsidianWall.asset'],
-    fauna: ['Capybara.png', 'Skelleton.anim'],
+    fauna: ['Capybara.png'],
   },
 };
 
@@ -49,7 +49,6 @@ export const CONSEQUENCE_DESCRIPTIONS = {
   'core/runtime/System.exe': 'Core system terminated.',
   'world/barriers/ObsidianWall.asset': 'Brick barrier removed from the Archive.',
   'world/fauna/Capybara.png': 'Capybara companion retreats beyond the veil.',
-  'world/fauna/Skelleton.anim': 'Skeleton liquefies into a shimmering blob.',
   'core/security/reality_anchor.sys': 'Reality anchor destabilized. System collapse imminent.',
   'core/security/quantum_stability.dat': 'Quantum coherence lost. Reality fracturing.',
   'core/security/consciousness_stream.bin': 'Consciousness stream severed. Existence compromised.',
@@ -68,7 +67,6 @@ export const FILE_ASSET_MAP = {
   'world/barriers/ObsidianWall.asset': 'assets/gfx/wall_brick.png',
   'textures/props/beverages/CoffeeMug.png': 'assets/gfx/coffee_placeholder.png',
   'world/fauna/Capybara.png': 'assets/gfx/capybara.png',
-  'world/fauna/Skelleton.anim': 'assets/gfx/blobanimation.png',
 };
 
 export const TEXTURE_PLACEHOLDER_SRC = 'assets/gfx/texture_missing.png';
@@ -89,12 +87,6 @@ export const COFFEE_MUG_PATH = 'textures/props/beverages/CoffeeMug.png';
 export const CHARACTER_SPRITE_COLUMNS = 2;
 export const CHARACTER_SPRITE_ROWS = 2;
 export const CHARACTER_ANIMATION_FPS = 2;
-
-export const SKELETON_PATH = 'world/fauna/Skelleton.anim';
-export const SKELETON_SPRITE_COLUMNS = 6;
-export const SKELETON_SPRITE_ROWS = 4;
-export const SKELETON_ANIMATION_FPS = 16;
-export const BLOB_PLACEHOLDER_SRC = 'assets/gfx/blob_placeholder.png';
 
 export const CAPYBARA_PATH = 'world/fauna/Capybara.png';
 export const CAPYBARA_SCENE_ID = 'sanctum';

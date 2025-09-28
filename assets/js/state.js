@@ -1,4 +1,4 @@
-﻿import { INITIAL_FILESYSTEM, SCENES, COYOTE_TIME, CAPYBARA_SCENE_ID } from './constants.js';
+import { INITIAL_FILESYSTEM, SCENES, COYOTE_TIME, CAPYBARA_SCENE_ID } from './constants.js';
 import { cloneFilesystem, countTotalFiles } from './utils.js';
 const CAPYBARA_SCENE_INDEX = SCENES.findIndex(function (scene) {
   return scene.id === CAPYBARA_SCENE_ID;
@@ -74,13 +74,6 @@ export const worldState = {
     baseY: 0,
     bobPhase: 0,
     sceneIndex: DEFAULT_CAPYBARA_SCENE_INDEX,
-  },
-  playerMorph: {
-    animating: false,
-    completed: false,
-    animationFrame: 0,
-    animationTimer: 0,
-    deactivateSkeletonAsset: false,
   },
 };
 
